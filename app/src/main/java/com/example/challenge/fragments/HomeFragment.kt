@@ -45,6 +45,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         employeeViewModel = (activity as MainActivity).employeeViewModel
+        setupHomeRecyclerView()
 
         binding.fbAddEmployee.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_addEmployeeFragment)
@@ -76,18 +77,29 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-    private fun searchNote(query: String?) {
+    private fun searchEmployee(query: String?) {
         val searchQery = "%$query"
 
-
+        employeeViewModel.searchEmployee(query).observe(this) { list ->
+            employeeAdapter.submitList(list)
+        }
     }
 
     override fun onQueryTextSubmit(p0: String?): Boolean {
         return false
     }
 
-    override fun onQueryTextChange(p0: String?): Boolean {
-        TODO("Not yet implemented")
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText != null) {
+            searchEmployee(newText)
+        }
+
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homeBinding = null
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -23,4 +23,7 @@ class EmployeeViewModel(app: Application, private val employeeRepository: Employ
         }
 
     fun getAllEmployees() = employeeRepository.getAllEmployees()
+
+    fun searchEmployee(query: String?) =
+        employeeRepository.searchEmployee(query)
 }

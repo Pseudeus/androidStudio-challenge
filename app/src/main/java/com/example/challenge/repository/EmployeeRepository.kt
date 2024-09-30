@@ -9,5 +9,5 @@ class EmployeeRepository(private val db: EmployeeDatabase) {
     suspend fun updateEmployee(employee: Employee) = db.getEmployeeDao().updateEmployee(employee)
 
     fun getAllEmployees() = db.getEmployeeDao().getAllEmployees()
-
+    fun searchEmployee(query: String?) = db.getEmployeeDao().searchEmployee(query)
 }

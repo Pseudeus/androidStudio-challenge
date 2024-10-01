@@ -36,6 +36,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     ): View? {
         // Inflate the layout for this fragment
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -46,7 +47,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         employeeViewModel = (activity as MainActivity).employeeViewModel
 
-
+        employeeViewModel.fetchEmployees()
         setupHomeRecyclerView()
 
         binding.fbAddEmployee.setOnClickListener {

@@ -10,8 +10,6 @@ import com.example.challenge.repository.EmployeeRepository
 import kotlinx.coroutines.launch
 
 class EmployeeViewModel(app: Application, private val employeeRepository: EmployeeRepository): AndroidViewModel(app) {
-    private val _employees = MutableLiveData<List<Employee>>()
-    val employees: LiveData<List<Employee>> get() = _employees
 
     fun addEmployee(employee: Employee) =
         viewModelScope.launch {
@@ -34,6 +32,12 @@ class EmployeeViewModel(app: Application, private val employeeRepository: Employ
     //        _employees.value = employeeList.body()
     //    }
     //}
+
+    fun fetchEmployees() =
+        viewModelScope.launch {
+            employeeRepository.fetchEmployees()
+        }
+
 
 
     fun searchEmployee(query: String?) =

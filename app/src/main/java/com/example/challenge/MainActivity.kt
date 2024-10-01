@@ -12,27 +12,22 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.challenge.database.ApiService
 import com.example.challenge.database.EmployeeDatabase
 import com.example.challenge.location.LocationCallback
-import com.example.challenge.model.Employee
+import com.example.challenge.network.NetworkMonitor
 import com.example.challenge.repository.EmployeeRepository
 import com.example.challenge.viewmodel.EmployeeViewModel
 import com.example.challenge.viewmodel.EmployeeViewModelFactory
 import com.example.notesroompractice.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var employeeViewModel: EmployeeViewModel
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var networkMonitor: NetworkMonitor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +38,12 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        networkMonitor = NetworkMonitor(this) {
+            // Called when network is available
+            onNetworkReestablished()
+        }
+
         setupViewModel()
 
         val locationPermissionRequest = registerForActivityResult(
@@ -65,7 +66,19 @@ class MainActivity : AppCompatActivity() {
             Manifest.permission.ACCESS_COARSE_LOCATION))
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        networkMonitor.startMonitoring()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        networkMonitor.stopMonitoring()
+    }
+
+    private fun onNetworkReestablished() {
+        employeeViewModel.fetchEmployees()
+        Toast.makeText(this, "Back online", Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun setupViewModel() {
         val employeeRepository = EmployeeRepository(EmployeeDatabase(this))
@@ -103,3 +116,5 @@ class MainActivity : AppCompatActivity() {
             }
     }
 }
+
+

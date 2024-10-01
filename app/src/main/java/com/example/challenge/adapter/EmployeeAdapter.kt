@@ -21,7 +21,9 @@ class EmployeeAdapter: RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder>(
 
     private val differCallback = object: DiffUtil.ItemCallback<Employee>() {
         override fun areItemsTheSame(oldItem: Employee, newItem: Employee): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.id == newItem.id &&
+                    oldItem.fullName == newItem.fullName &&
+                    oldItem.avatar == newItem.avatar
         }
 
         override fun areContentsTheSame(oldItem: Employee, newItem: Employee): Boolean {

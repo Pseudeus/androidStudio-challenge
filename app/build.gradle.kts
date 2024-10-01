@@ -74,4 +74,14 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     // Annotation processor
     ksp("androidx.lifecycle:lifecycle-compiler:$lifecycleVersion")
+
+    //GPS
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    //UTCTime
+    //implementation("com.jakewharton.threetenabp:threetenabp:2.3.0")
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit2:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }

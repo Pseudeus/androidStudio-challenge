@@ -8,7 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -65,7 +65,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     private fun setupHomeRecyclerView() {
         employeeAdapter = EmployeeAdapter()
         binding.rbHome.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            layoutManager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
             setHasFixedSize(true)
             adapter = employeeAdapter
         }
@@ -100,6 +100,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     override fun onDestroy() {
         super.onDestroy()
         homeBinding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupHomeRecyclerView()
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

@@ -30,6 +30,7 @@
                 android:layout_height="64dp"
                 tools:src="@tools:sample/avatars"
                 android:background="@drawable/bg_profile"
+                android:backgroundTint="@color/pink"
                 app:shapeAppearanceOverlay="@style/Circular"
                 app:strokeColor="@color/pink"
                 app:strokeWidth="2dp"

@@ -18,9 +18,9 @@ import com.example.challenge.MainActivity
 import com.example.challenge.adapter.EmployeeAdapter
 import com.example.challenge.model.Employee
 import com.example.challenge.viewmodel.EmployeeViewModel
-//import com.example.challenge.R
 import com.example.notesroompractice.R
 import com.example.notesroompractice.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener, MenuProvider {
 
@@ -45,6 +45,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         employeeViewModel = (activity as MainActivity).employeeViewModel
+
+
         setupHomeRecyclerView()
 
         binding.fbAddEmployee.setOnClickListener {
@@ -119,5 +121,4 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return false
     }
-
 }

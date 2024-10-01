@@ -12,7 +12,7 @@ import com.example.challenge.model.Employee
 @Dao
 interface EmployeeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEmployee(employee: Employee)
+    suspend fun insertEmployee(employee: Employee): Long
 
     @Update
     suspend fun updateEmployee(employee: Employee)
